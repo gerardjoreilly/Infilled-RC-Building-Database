@@ -50,6 +50,8 @@ set STb 1; #Shear Hinge for Beam (0: No, 1: Yes)
 set STc 1; #Shear Hinge for Column (0: No, 1: Yes)
 set stairsOPT 0; #Add Stairs (0: No, 1: Yes)
 set infillsOPT 1; #Add Infills (0: No, 1: Yes)
+set pilotisOPT 0; #Open Ground Floor (0: No, 1: Yes)
+
 
 # --------------------------------------
 # Define the base nodes
@@ -1191,6 +1193,7 @@ if {$infillsOPT == 1} {
 # -------------------
 # X-Direction
 # -------------------
+if {$pilotisOPT == 0} {
 
 # 1st Floor
 
@@ -1205,6 +1208,8 @@ infill 		2221 	single 	[list 1221 1321 1320 1220] 	 3000. [expr $H*1000] 	   $hb
 infill 		2141 	single 	[list 1141 1241 1240 1140] 	 5400. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
 infill 		2241 	single 	[list 1241 1341 1340 1240] 	 3000. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw3	$Ecc1 $Ewh3 	$Ewv3 	$Gw3 0.2 $fwv3 	$fwu3 	$fws3 	0.0
 infill 		2341 	single 	[list 1341 1441 1440 1340] 	 5400. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+}
 
 # 2nd Floor
 
@@ -1265,6 +1270,7 @@ infill 		2345 	single 	[list 1345 1445 1444 1344] 	 5400. [expr $H*1000] 	   $hb
 # -------------------
 # Y-Direction
 # -------------------
+if {$pilotisOPT==0} {
 
 # 1st Floor
 
@@ -1285,6 +1291,8 @@ infill 		3231 	single 	[list 1321 1331 1330 1320] 	2000. [expr $H*1000] 	$hb2  	
 infill 		3141 	single 	[list 1411 1421 1420 1410] 	3500. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
 infill 		3241 	single 	[list 1421 1431 1430 1420] 	2000. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
 infill 		3341 	single 	[list 1431 1441 1440 1430] 	3500. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+}
 
 # 2nd Floor
 

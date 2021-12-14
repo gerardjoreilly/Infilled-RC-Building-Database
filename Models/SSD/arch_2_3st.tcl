@@ -27,18 +27,6 @@ global AType
 model basic -ndm 3 -ndf 6
 
 # --------------------------------------
-# Define some basic model parameters
-# --------------------------------------
-# Dimensions and General Para.
-
-set nst 3; #Number of Stories
-set mtype "Infill"; #Typology
-set STb 0; #Shear Hinge for Beam (0: No, 1: Yes)
-set STc 0; #Shear Hinge for Column (0: No, 1: Yes)
-set stairsOPT 0; #Add Stairs (0: No, 1: Yes)
-set infillsOPT 1; #Add Infills (0: No, 1: Yes)
-
-# --------------------------------------
 # Load some procedures
 # --------------------------------------
 # These following two files are in another repository
@@ -50,6 +38,19 @@ source $procdir/modalAnalysis.tcl
 source $procdir/infill.tcl
 source $procdir/infill_prop.tcl
 source $procdir/arch_2_inputParam_SSD.tcl
+
+# --------------------------------------
+# Define some basic model parameters
+# --------------------------------------
+# Dimensions and General Para.
+
+set nst 3; #Number of Stories
+set mtype "Infill"; #Typology
+set STb 0; #Shear Hinge for Beam (0: No, 1: Yes)
+set STc 0; #Shear Hinge for Column (0: No, 1: Yes)
+set stairsOPT 0; #Add Stairs (0: No, 1: Yes)
+set infillsOPT 1; #Add Infills (0: No, 1: Yes)
+set pilotisOPT 0; #Open Ground Floor (0: No, 1: Yes)
 
 # --------------------------------------
 # Define the base nodes
@@ -1002,6 +1003,7 @@ if {$infillsOPT == 1} {
   # -------------------
   # X-Direction
   # -------------------
+  if {$pilotisOPT==0} {
 
   # 1st Floor
 
@@ -1032,6 +1034,8 @@ if {$infillsOPT == 1} {
   infill 		2341 	single 	[list 1341 1441 1440 1340] 	 2600. [expr $H*1000] 	   $hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		2441 	single 	[list 1441 1541 1540 1440] 	 3200. [expr $H*1000] 	   $hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		2541 	single 	[list 1541 1641 1640 1540] 	 4500. [expr $H*1000] 	   $hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+  }
 
   # 2nd Floor
 
@@ -1096,6 +1100,7 @@ if {$infillsOPT == 1} {
   # -------------------
   # Y-Direction
   # -------------------
+  if {$pilotisOPT==0} {
 
   # 1st Floor
 
@@ -1116,6 +1121,8 @@ if {$infillsOPT == 1} {
   infill 		3161 	single 	[list 1611 1621 1620 1610] 	4500. [expr $H*1000] 	$hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		3261 	single 	[list 1621 1631 1630 1620] 	2000. [expr $H*1000] 	$hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		3361 	single 	[list 1631 1641 1640 1630] 	4500. [expr $H*1000] 	$hb1  	$bc2	$hc2 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+  }
 
   # 2nd Floor
 
@@ -1400,8 +1407,8 @@ if {$AType == "NRHA" || $AType == "IDA"} {
   set tsTagY 2		; # Set a timeseries tag, this is needed for total floor acceleration recorder
   set pTagX 1		; # Set a pattern tag
   set pTagY 2		; # Set a pattern tag
-  timeSeries Path $tsTagX -dt $dt -filePath $EQnameX -factor $sfX
-  timeSeries Path $tsTagY -dt $dt -filePath $EQnameY -factor $sfY
+  timeSeries Path $tsTagX -dt $dtX -filePath $EQnameX -factor $sfX
+  timeSeries Path $tsTagY -dt $dtY -filePath $EQnameY -factor $sfY
 
   # --------------------------------------
   # DEFINE LOAD PATTERN

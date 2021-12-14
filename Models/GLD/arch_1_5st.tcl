@@ -39,7 +39,6 @@ source $procdir/infill.tcl
 source $procdir/infill_prop.tcl
 source $procdir/arch_1_inputParam_GLD.tcl
 
-puts $bdg_w
 # --------------------------------------
 # Define some basic model parameters
 # --------------------------------------
@@ -51,6 +50,8 @@ set STb 0; #Shear Hinge for Beam (0: No, 1: Yes)
 set STc 0; #Shear Hinge for Column (0: No, 1: Yes)
 set stairsOPT 0; #Add Stairs (0: No, 1: Yes)
 set infillsOPT 1; #Add Infills (0: No, 1: Yes)
+set pilotisOPT 0; #Remove Infills on Ground Floor (0: No, 1: Yes)
+
 
 # --------------------------------------
 # Define the base nodes
@@ -1621,7 +1622,7 @@ if {$infillsOPT == 1} {
   # -------------------
   # X-Direction
   # -------------------
-
+  if {$pilotisOPT == 0} {
   # 1st Floor
 
   # X=1;
@@ -1649,6 +1650,8 @@ if {$infillsOPT == 1} {
   infill 		2541 	single 	[list 1541 1641 1640 1540] 	 3150. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		2641 	single 	[list 1641 1741 1740 1640] 	 2000. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		2741 	single 	[list 1741 1841 1840 1740] 	 3500. [expr $H*1000] 	   $hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+}
 
   # 2nd Floor
 
@@ -1765,6 +1768,7 @@ if {$infillsOPT == 1} {
   # -------------------
   # Y-Direction
   # -------------------
+  if {$pilotisOPT == 0} {
 
   # 1st Floor
 
@@ -1801,6 +1805,8 @@ if {$infillsOPT == 1} {
   infill 		3181 	single 	[list 1811 1821 1820 1810] 	3000. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		3281 	single 	[list 1821 1831 1830 1820] 	2000. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
   infill 		3381 	single 	[list 1831 1841 1840 1830] 	4000. [expr $H*1000] 	$hb1  	$bc1	$hc1 $tw2	$Ecc1 $Ewh2 	$Ewv2 	$Gw2 0.2 $fwv2 	$fwu2 	$fws2 	0.0
+
+}
 
   # 2nd Floor
 
